@@ -904,14 +904,14 @@ script.register_looped("autoGetBunkerCargo", function(script)
         if autoGetBunkerCargo then
             globals.set_int(1662873 + 1 + 5, 1)
             gui.show_message("Bunker", "Resupplying your bunker supplies every 5 seconds.")
-            sleep(5)
+            script:sleep(500)
         end
     end
 end)
 Bunker:add_text("Instant Finish Sell Missions")
 Bunker:add_button("Instant Sell Supplies",
 function ()
-	locals.set_int("fm_mission_controller", BCISl, 0)
+	locals.set_int("gb_gunrunning", BCISl, 0)
 end
 )
 -- MC Businesses
@@ -1248,8 +1248,23 @@ function()
 end
 )
 -- Miscellaneous --
+local Miscellaneous = Silent:add_tab("Miscellaneous")
 
+-- Stat  Editor --
 
+local StatsEd = Miscellaneous:add_tab("Stat Editor")
+StatsEd:add_text("Set Your RP")
+StatsEd:add_button("420",
+function ()
+	script.run_in_fiber(
+		function (script)
+			rpLevel = 13288350 -- Level 420 -- https://www.unknowncheats.me/forum/2458458-post691.html
+			STATS.STAT_SET_INT(joaat(MPX() .. "CHAR_SET_RP_GIFT_ADMIN"), rpLevel, true)
+			gui.show_message("Stats", "Your level was set to 420, changing session and applying RP")
+		end
+	)
+end
+)
 
 -- Vehicle Utilities --
 function FastAcc(speed)
@@ -1258,7 +1273,6 @@ function FastAcc(speed)
 	VEHICLE.SET_VEHICLE_MAX_SPEED(vehicle, speed)
 end
 
-local Miscellaneous = Silent:add_tab("Miscellaneous")
 local VehUtils = Miscellaneous:add_tab("Vehicle Utilities")
 VehUtils:add_text("Set Top Speed Of Vehicle")
 local vehTopSpeed = VehUtils:add_input_int("Top Speed")
